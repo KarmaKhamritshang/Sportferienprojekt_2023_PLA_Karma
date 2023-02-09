@@ -12,17 +12,7 @@ Blue='\033[0;34m'         # Blue
 Purple='\033[0;35m'       # Purple
 Cyan='\033[0;36m'         # Cyan
 White='\033[0;37m'        # White
- 
-# Background
-BG_Black='\033[40m'       # Black
-BG_Red='\033[41m'         # Red
-BG_Green='\033[42m'       # Green
-BG_Yellow='\033[43m'      # Yellow
-BG_Blue='\033[44m'        # Blue
-BG_Purple='\033[45m'      # Purple
-BG_Cyan='\033[46m'        # Cyan
-BG_White='\033[47m'       # White
- 
+
 # High Intensity
 HIBlack='\033[0;90m'       # Black
 HIRed='\033[0;91m'         # Red
@@ -57,33 +47,54 @@ BG_IWhite='\033[0;107m'   # White
 
 pingpong() {
         clear
-        read -p "Gebe eine IP Addresse oder DNS an: " address
-        read -p "Gebe eine Anzahl an Pakete ein: " packets
+        read -p "Enter a valid IP Address or DNS: " address
+        read -p "Enter amount of packets: " packets
         echo ""
-        ping -c $packets $address | grep 'packets transmitted' # sends 10 packets
-
+        ping -c $packets $address 
         # Ping the specified host and store the result
         result=$(ping -c $packets $address)
-
         # Check if the ping was successful
         if [ $? -ne 0 ]; then
-        # If the ping was not successful, gather information about the network
-        # connection and create a report
-        report="$report $(date)\n\n"
-        report="Ping to host $host failed.\n\n"
-        report="$report $(ip addr show)"
-        report="$report $(route -n)\n\n"
-
-        # Prompt the user for the email address to send the report to
-        read -p "Enter the email address to send the report to: " email
-
-        # Send the report to the specified email address
-        echo -e $report | mail -s "Ping Failure Report" $email
-        else
-        echo "Ping to host $host was successful."
+                echo -e "${BIRed}----------------------------"
+                echo -e " Ping was not successful"
+                echo -e "----------------------------"
+                echo -e " [1] Send yourself a report"
+                echo -e " [2] Ping again"
+                echo -e " [3] Return to main menu"
+                echo -e " [4] Exit"
+                echo -e "----------------------------${Color_Off}"
+                read -p "Choose an option: " failping
+                while true; 
+                do
+                        if [ $failping -eq 1 ]; then
+                                # If the ping was not successful, gather information about the network
+                                # connection and create a report
+                                report="Ping to $address failed. \n\n Here are some solutions: \n\n 1) Check the connectivity: Ensure that the target device is turned on and connected to the network. \n\n 2) Verify the IP address: Make sure that you have entered the correct IP address or hostname of the target device. \n\n 3) Check the firewall: If a firewall is enabled on the target device, it might be blocking the incoming ping request. Disable the firewall temporarily to see if it resolves the issue. \n\n 4) Disable antivirus software: Antivirus software can sometimes interfere with network connectivity. Try disabling it temporarily to see if it resolves the issue. \n\n 5) Restart the network devices: Restart the target device and the device that you are pinging from to ensure that they are functioning properly. \n\n 6) Flush the DNS cache: Clearing the DNS cache can sometimes resolve issues with network connectivity. \n\n 7) Update network drivers: Make sure that you have the latest network drivers installed on your device to ensure optimal network performance. \n\n 8) Check the network cable: If you are using a wired connection, check the network cable for any signs of damage or wear. \n\n 9) Try a different network: If you are using a wireless connection, try moving closer to the router or switch to see if the signal strength improves. If you are using a wired connection, try a different cable or port on the switch. \n\n 10) Check the network settings: Ensure that the network settings on your device are configured correctly, including the IP address, subnet mask, and default gateway.\n\n 11) Contact the network administrator: If you are still unable to ping the target device, reach out to your network administrator for further assistance"                                
+                                # Prompt the user for the email address to send the report to
+                                read -p "Enter your email address to send the report to: " email
+                                # Send the report to the specified email address
+                                echo -e $report | mail -s "Ping Failure Report" $email
+                                echo "Mail has been sent, check your Junk Folder!"
+                                sleep 2.5
+                                break
+                        elif [ $failping -eq 2 ]; then
+                                pingpong
+                        elif [ $failping -eq 3 ]; then
+                                main
+                        elif [ $failping -eq 4 ]; then
+                                exit
+                        fi
+                done
+        else    
+                echo "Ping to $address was successful."
+                read -p "Wanna ping again or return back to the main menu? [ping/menu]: " pingagain
+                if [ $pingagain -eq "ping" ]; then
+                        pingpong
+                else
+                        main
+                fi
         fi
 }
-
 
 ping_troubleshooting() {
         while true;
@@ -91,14 +102,13 @@ ping_troubleshooting() {
                 clear
                 echo -e "${BIRed}┌══════════════════════════┐"
                 echo -e "█   Ping Troubleshooting   █"
-                echo -e "└══════════════════════════┘${Color_Off}"
+                echo -e "└══════════════════════════┘"
                 echo ""
-                echo -e "${BIRed} [1] Ping an IP Address or DNS "
-                echo -e " [2] - "
-                echo -e " [3] - "
-                echo -e " [4] Skript beenden ${Color_Off}"
+                echo -e " [1] Ping an IP Address or DNS "
+                echo -e " [2] Return to main menu "
+                echo -e " [3] Exit ${Color_Off}"
                 echo ""
-                read -p "Wähle eine Option aus: " pingopt
+                read -p "Choose an option: " pingopt
 
                 case $pingopt in
 
@@ -106,26 +116,23 @@ ping_troubleshooting() {
                                 pingpong
                                 ;;
                         2)
-                                echo "In Bearbeitung..."
+                                main
                                 ;;
-                        3)
-                                echo "In Bearbeitung..."
-                                ;;
-                        4)      
+                        3)      
                                 clear
-                                echo "..."
+                                echo "."
                                 sleep 0.5
                                 echo ".."
                                 sleep 0.5
-                                echo "."
+                                echo "..."
                                 sleep 0.5
-                                echo "Skript wird beendet... Aufwiedersehen \( ^_^)／"
+                                echo "Exiting script... Goodbye! \( ^_^)／"
                                 sleep 1
                                 exit # Skript beenden
                                 ;;
                         *)
-                                echo "Dieser Menüpunkt existiert nicht."
-                                sleep 1
+                                echo "This option doesn't exist, try again..."
+                                sleep 1.5
                                 ;;
 
                 esac                
@@ -181,41 +188,50 @@ echo -e "The ╚═╝  ╚═╝ ╚═════╝    ╚═╝    ╚═�
                 echo "└══════════════════════════════════┘"
                 echo ""
                 echo -e "${BIRed} [1] Ping Troubleshooting "
-                echo -e " [2] Benutzer- und Gruppenverwaltung "
-                echo -e " [3] Password Manager "
-                echo -e " [4] File Manager "
-                echo -e " [5] Skript beenden ${Color_Off}"
+                echo -e " [2] DNS Flush"
+                echo -e " [3] User and Group Management "
+                echo -e " [4] Password Manager "
+                echo -e " [5] File Manager "
+                echo -e " [6] Exit ${Color_Off}"
                 echo ""
-                read -p "Wähle eine Option aus: " menu
+                read -p "Choose an option: " menu
 
                 case $menu in
 
                         1)
                                 ping_troubleshooting
                                 ;;
-                        2)
+                        2)      
+                                sudo resolvectl flush-caches
+                                echo "Flushing DNS Cache..."
+                                sleep 2
+                                ;;
+                        3)
+                                clear
                                 benutzer_und_gruppenverw
                                 ;;
-                        3)      
-                                password_generator
-                                ;;
                         4)      
-                                file_manager
+                                clear
+                                password_generator
                                 ;;
                         5)      
                                 clear
-                                echo "..."
+                                file_manager
+                                ;;
+                        6)      
+                                clear
+                                echo "."
                                 sleep 0.5
                                 echo ".."
                                 sleep 0.5
-                                echo "."
+                                echo "..."
                                 sleep 0.5
-                                echo "Skript wird beendet... Aufwiedersehen \( ^_^)／"
+                                echo "Exiting script... Goodbye! \( ^_^)／"
                                 sleep 1
                                 exit # Skript beenden
                                 ;;
                         *)
-                                echo "Dieser Menüpunkt existiert nicht."
+                                echo "This option doesn't exist, try again..."
                                 sleep 1
                                 ;;
                 esac
