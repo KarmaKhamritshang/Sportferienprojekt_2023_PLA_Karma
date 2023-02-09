@@ -1,10 +1,13 @@
 # Sportferienprojekt_2023_PLA_Karma
 
-## Projektname: Toolkit für Sysadmins
+### Projektname: Toolkit für Sysadmins
 
-Tools & weitere Quellen
+### Tools & weitere Quellen
 
-## Banner Tool:
+Mail-Command Erklärung:
+https://linuxhint.com/umail-command-linux/
+
+Banner Tool:
 https://manytools.org/hacker-tools/ascii-banner/
 
 ## Packages that need to be installed
