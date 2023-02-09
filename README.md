@@ -10,6 +10,6 @@ https://linuxhint.com/umail-command-linux/
 Banner Tool:
 https://manytools.org/hacker-tools/ascii-banner/
 
-## Packages that need to be installed
+### Packages that need to be installed
 
 - sudo apt install mailutils
