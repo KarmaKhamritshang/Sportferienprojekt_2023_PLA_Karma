@@ -55,21 +55,22 @@ pingpong() {
         result=$(ping -c $packets $address)
         # Check if the ping was successful
         if [ $? -ne 0 ]; then
-                echo -e "${BIRed}----------------------------"
-                echo -e " Ping was not successful"
-                echo -e "----------------------------"
-                echo -e " [1] Send yourself a report"
-                echo -e " [2] Ping again"
-                echo -e " [3] Return to main menu"
-                echo -e " [4] Exit"
-                echo -e "----------------------------${Color_Off}"
-                read -p "Choose an option: " failping
-                while true; 
+                while true;
                 do
+                        clear
+                        echo -e "${BIRed}----------------------------"
+                        echo -e " Ping was not successful"
+                        echo -e "----------------------------"
+                        echo -e " [1] Send yourself a report"
+                        echo -e " [2] Ping again"
+                        echo -e " [3] Return to main menu"
+                        echo -e " [4] Exit"
+                        echo -e "----------------------------${Color_Off}"
+                        read -p "Choose an option: " failping
                         if [ $failping -eq 1 ]; then
                                 # If the ping was not successful, gather information about the network
                                 # connection and create a report
-                                report="Ping to $address failed. \n\n Here are some solutions: \n\n 1) Check the connectivity: Ensure that the target device is turned on and connected to the network. \n\n 2) Verify the IP address: Make sure that you have entered the correct IP address or hostname of the target device. \n\n 3) Check the firewall: If a firewall is enabled on the target device, it might be blocking the incoming ping request. Disable the firewall temporarily to see if it resolves the issue. \n\n 4) Disable antivirus software: Antivirus software can sometimes interfere with network connectivity. Try disabling it temporarily to see if it resolves the issue. \n\n 5) Restart the network devices: Restart the target device and the device that you are pinging from to ensure that they are functioning properly. \n\n 6) Flush the DNS cache: Clearing the DNS cache can sometimes resolve issues with network connectivity. \n\n 7) Update network drivers: Make sure that you have the latest network drivers installed on your device to ensure optimal network performance. \n\n 8) Check the network cable: If you are using a wired connection, check the network cable for any signs of damage or wear. \n\n 9) Try a different network: If you are using a wireless connection, try moving closer to the router or switch to see if the signal strength improves. If you are using a wired connection, try a different cable or port on the switch. \n\n 10) Check the network settings: Ensure that the network settings on your device are configured correctly, including the IP address, subnet mask, and default gateway.\n\n 11) Contact the network administrator: If you are still unable to ping the target device, reach out to your network administrator for further assistance"                                
+                                report="Ping to $address failed. \n\n Here are some solutions: \n\n 1) Check the connectivity: Ensure that the target device is turned on and connected to the network. \n\n 2) Verify the IP address:  Make sure that you have entered the correct IP address or hostname of the target device. \n\n 3) Check the firewall: If a firewall is enabled on the target device, it might be blocking the incoming    ping request. Disable the firewall temporarily to see if it resolves the issue. \n\n 4) Disable antivirus software: Antivirus software can sometimes interfere with network connectivity. Try      disabling it temporarily to see if it resolves the issue. \n\n 5) Restart the network devices: Restart the target device and the device that you are pinging from to ensure that they are functioning        properly. \n\n 6) Flush the DNS cache: Clearing the DNS cache can sometimes resolve issues with network connectivity. \n\n 7) Update network drivers: Make sure that you have the latest network       drivers installed on your device to ensure optimal network performance. \n\n 8) Check the network cable: If you are using a wired connection, check the network cable for any signs of damage or wear.        \n\n 9) Try a different network: If you are using a wireless connection, try moving closer to the router or switch to see if the signal strength improves. If you are using a wired connection, try a  different cable or port on the switch. \n\n 10) Check the network settings: Ensure that the network settings on your device are configured correctly, including the IP address, subnet mask, and         default gateway.\n\n 11) Contact the network administrator: If you are still unable to ping the target device, reach out to your network administrator for further      assistance"                                
                                 # Prompt the user for the email address to send the report to
                                 read -p "Enter your email address to send the report to: " email
                                 # Send the report to the specified email address
@@ -83,6 +84,9 @@ pingpong() {
                                 main
                         elif [ $failping -eq 4 ]; then
                                 exit
+                        else
+                                echo "This option doesn't exist, try again..."
+                                sleep 1.5
                         fi
                 done
         else    
@@ -100,16 +104,15 @@ ping_troubleshooting() {
         while true;
         do
                 clear
-                echo -e "${BIRed}┌══════════════════════════┐"
-                echo -e "█   Ping Troubleshooting   █"
-                echo -e "└══════════════════════════┘"
+                echo "┌══════════════════════════┐"
+                echo "█   Ping Troubleshooting   █"
+                echo "└══════════════════════════┘"
                 echo ""
-                echo -e " [1] Ping an IP Address or DNS "
+                echo -e "${BIRed} [1] Ping an IP Address or DNS "
                 echo -e " [2] Return to main menu "
                 echo -e " [3] Exit ${Color_Off}"
                 echo ""
                 read -p "Choose an option: " pingopt
-
                 case $pingopt in
 
                         1)
@@ -134,13 +137,119 @@ ping_troubleshooting() {
                                 echo "This option doesn't exist, try again..."
                                 sleep 1.5
                                 ;;
-
                 esac                
         done
 }
 #--------------------------------------------------------------------------------------------
+
+# 1) Create a new user
+
+create_user() {
+
+}
+
+# 3) Delete a user
+
+del_user() {
+
+}
+ 
+# 4) Create a new group
+
+create_group() {
+
+}
+
+# 5) Delete a group
+
+del_group() {
+
+}
+
+
 benutzer_und_gruppenverw() {
-        echo "Hello"
+        while true;
+        do
+                clear
+                echo "┌══════════════════════════════┐"
+                echo "█   User and Group Management  █"
+                echo "└══════════════════════════════┘"
+                echo ""
+                echo -e "${BIRed} [1] Create new user "
+                echo -e " [2] List currently logged in users "
+                echo -e " [3] Delete a user "
+                echo -e " [4] Create a new group "
+                echo -e " [5] Delete a group "
+                echo -e " [6] List existing groups "
+                echo -e " [7] Return to main menu "
+                echo -e " [8] Exit ${Color_Off}"
+                echo ""
+                read -p "Choose an option: " pingopt
+                case $pingopt in
+
+                        1)
+                                create_user
+                                ;;
+                        2)
+                                clear
+                                echo "Those are the currently logged in users:"
+                                sleep 1
+                                echo "..."
+                                sleep 0.5
+                                echo ".."
+                                sleep 0.5
+                                echo "."
+                                sleep 0.5
+                                users
+                                sleep 3.5
+                                echo "Returning..."
+                                sleep 1
+                                ;;
+                        3)
+                                del_user
+                                ;;
+                        4)
+                                create_group
+                                ;;
+                        5)
+                                del_group
+                                ;;
+                        6)
+                                clear
+                                echo "Those are the currently logged in users:"
+                                sleep 1
+                                echo "..."
+                                sleep 0.5
+                                echo ".."
+                                sleep 0.5
+                                echo "."
+                                sleep 0.5
+                                users
+                                sleep 3.5
+                                echo "Returning..."
+                                sleep 1
+                                ;;
+                        7)
+                                main
+                                ;;
+                        8)
+                                clear
+                                echo "."
+                                sleep 0.5
+                                echo ".."
+                                sleep 0.5
+                                echo "..."
+                                sleep 0.5
+                                echo "Exiting script... Goodbye! \( ^_^)／"
+                                sleep 1
+                                exit # Skript beenden
+                                ;;
+                        *)
+                                echo "This option doesn't exist, try again..."
+                                sleep 1.5
+                                ;;
+                esac    
+        done
 }
 #--------------------------------------------------------------------------------------------
 password_generator() {
@@ -159,7 +268,7 @@ main() {
                 # fetch ens33 IP-Addr
                 ipaddr=$(ip -4 addr show ens33 | grep -oP '(?<=inet\s)\d+(\.\d+){3}')
                 # get hostname
-                hostn=$(whoami)
+                hostn=$(hostname)
                 # get mac address of ens33
                 macaddr=$(ip link show ens33 | awk '/link\/ether/ {print $2}')
                 # get gateway address of ens33
@@ -176,16 +285,16 @@ echo -e "The ╚═╝  ╚═╝ ╚═════╝    ╚═╝    ╚═�
                 echo ""
                 echo "[+]═════[ Author : Karma Khamritshang ]═════[+]"
                 echo ""
-                echo -e "┌══════════════════════════════════┐"
-                echo -e "█    Your Network Configuration    █" 
-                echo -e "└══════════════════════════════════┘" 
-                echo "┌══════════════════════════════════┐"
-                echo "█ Hostname     | $hostn             █"
-                echo "█ Interface    | ens33             █"
-                echo "█ IP Address   | $ipaddr    █"
-                echo "█ Mac Address  | $macaddr █"
-                echo "█ Gateway      | $gateway      █"
-                echo "└══════════════════════════════════┘"
+                echo -e "┌══════════════════════════════════════┐"
+                echo -e "█    Your Network Configuration        █" 
+                echo -e "└══════════════════════════════════════┘" 
+                echo "┌══════════════════════════════════════┐"
+                echo "█ Hostname     | $hostn █"
+                echo "█ Interface    | ens33                 █"
+                echo "█ IP Address   | $ipaddr        █"
+                echo "█ Mac Address  | $macaddr     █"
+                echo "█ Gateway      | $gateway          █"
+                echo "└══════════════════════════════════════┘"
                 echo ""
                 echo -e "${BIRed} [1] Ping Troubleshooting "
                 echo -e " [2] DNS Flush"
@@ -205,6 +314,8 @@ echo -e "The ╚═╝  ╚═╝ ╚═════╝    ╚═╝    ╚═�
                                 sudo resolvectl flush-caches
                                 echo "Flushing DNS Cache..."
                                 sleep 2
+                                echo "Done!"
+                                sleep 1
                                 ;;
                         3)
                                 clear
@@ -229,6 +340,9 @@ echo -e "The ╚═╝  ╚═╝ ╚═════╝    ╚═╝    ╚═�
                                 echo "Exiting script... Goodbye! \( ^_^)／"
                                 sleep 1
                                 exit # Skript beenden
+                                ;;
+                        99) # Schneller Shutdown
+                                sudo shutdown now # Funktioniert ohne Eingabe des Passwords, wenn der Admin kein Passwort definiert hat.
                                 ;;
                         *)
                                 echo "This option doesn't exist, try again..."
