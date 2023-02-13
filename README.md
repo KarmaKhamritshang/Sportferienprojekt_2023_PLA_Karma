@@ -2,7 +2,10 @@
 
 ### Projektname: Toolkit für Sysadmins
 
-### Tools & weitere Quellen
+### Tools & Informationsquellen:
+
+Bash Scripting Cheatsheet
+https://devhints.io/bash
 
 Mail-Command Erklärung:
 https://linuxhint.com/umail-command-linux/
