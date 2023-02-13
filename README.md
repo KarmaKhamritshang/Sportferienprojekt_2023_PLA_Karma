@@ -1,8 +1,11 @@
 # Sportferienprojekt_2023_PLA_Karma
 
-### Projektname: Toolkit für Sysadmins
+### Project Name: Toolkit für Sysadmins
 
 ### Tools & Informationsquellen:
+
+An A-Z Index of the Linux command line
+https://ss64.com/bash/
 
 Bash Scripting Cheatsheet
 https://devhints.io/bash
