@@ -309,14 +309,25 @@ del_user() {
                 if [ -z "$delete_user" ]; then
                         echo "No input detected. Try again!"
                 else
-                        echo "Deleting User..."
-                        sleep 1
+                        echo -e "Deleting the User ${HIRed}$delete_user${Color_Off}..."
+                        sleep 3
                         sudo userdel $delete_user
                         echo "DONE!"
-                        sleep 3
-                        echo "Returning..."
-                        sleep 1.5
-                        break
+                        sleep 2
+                        while true;
+                        do
+                                clear
+                                read -p "Do you want to delete another user or return? (again/return): " delanswusr
+                                if [ -z "$delanswusr" ]; then
+                                        echo "No input detected. Try again!"
+                                elif [ $delanswusr = "again" ]; then
+                                        del_user
+                                elif [ $delanswusr = "return" ]; then
+                                        echo "Returning..."
+                                        sleep 2.5
+                                        benutzer_und_gruppenverw
+                                fi
+                        done
                 fi
         done
 }
@@ -324,13 +335,62 @@ del_user() {
 # 4) Create a new group
 
 create_group() {
-        echo "Hello"
+        while true; 
+        do
+                clear
+                read -p "Enter the name of the group you want to create: " group_name
+                if [ -z "$group_name" ]; then
+                        echo "No input detected. Try again!"
+                else
+                        echo "The default is to use the smallest ID value greater than 999" 
+                        echo "and greater than every other group."
+                        while true;
+                        do
+                                read -p "Do you want to give the group a specific Group Id Number? (y/n): " answer_gid
+                                if [ -z "$answer_gid" ]; then
+                                        echo "No input detected. Try again!"
+                                elif [ $answer_gid = "y" ]; then
+                                        g
+                                elif [ $answer_gid = "n" ]; then
+                                        g
+                                fi
+                        done
+                fi
+        done
 }
 
 # 5) Delete a group
 
 del_group() {
-        echo "Hello"
+        while true;
+        do
+                clear
+                read -p "Enter a group you want to delete: " delete_group
+                if [ -z "$delete_group" ]; then
+                        echo "No input detected. Try again!"
+                        sleep 1.5
+                else
+                        echo "Deleting group..."
+                        sleep 2
+                        sudo groupdel $delete_group
+                        sleep 2
+                        echo "Done..."
+                        sleep 1
+                        while true; 
+                        do
+                                read -p "Do you wanna delete another group or return? (again/return): " askdgroup
+                                if [ -z "$askdgroup" ]; then
+                                        echo "No input detected. Try again!"
+                                        sleep 1.5
+                                elif [ $askdgroup = "again" ]; then
+                                        del_group
+                                elif [ $askdgroup = "return" ]; then
+                                        echo "Returning..."
+                                        benutzer_und_gruppenverw
+                                fi
+                        done
+                fi
+        done
 }
 
 # 6) List groups of a specific user
@@ -349,15 +409,18 @@ usergroup_listing() {
                         sleep 0.5
                         groups $usrgrlist
                         read -p "Do you wanna list again or return? (again/return) :" answusrgrlist
-                        if [ -z "$answusrgrlist" ]; then
-                                echo "No input detected. Try again!"
-                        elif [ $answusrgrlist = "again" ]; then
-                                usergroup_listing
-                        elif [ $answusrgrlist = "return" ]; then
-                                echo "Returning..."
-                                sleep 1
-                                benutzer_und_gruppenverw
-                        fi
+                        while true;
+                        do
+                                if [ -z "$answusrgrlist" ]; then
+                                        echo "No input detected. Try again!"
+                                elif [ $answusrgrlist = "again" ]; then
+                                        usergroup_listing
+                                elif [ $answusrgrlist = "return" ]; then
+                                        echo "Returning..."
+                                        sleep 1
+                                        benutzer_und_gruppenverw
+                                fi
+                        done
                 fi
         done
 }
