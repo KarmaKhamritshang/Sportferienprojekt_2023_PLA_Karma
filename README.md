@@ -16,6 +16,9 @@ https://linuxhint.com/umail-command-linux/
 Banner Tool:
 https://manytools.org/hacker-tools/ascii-banner/
 
+Hide User Input
+https://www.baeldung.com/linux/bash-hide-user-input
+
 ### Packages that need to be installed
 
 - sudo apt install mailutils
