@@ -342,17 +342,63 @@ create_group() {
                 if [ -z "$group_name" ]; then
                         echo "No input detected. Try again!"
                 else
-                        echo "The default is to use the smallest ID value greater than 999" 
-                        echo "and greater than every other group."
+                        echo "The default is to use the smallest ID value greater " 
+                        echo "than 999 and greater than every other group."
+                        echo "Values between 0 and 999 are typically reserved for system accounts."
+                        echo "---------------------------------------------------------------------"
                         while true;
                         do
                                 read -p "Do you want to give the group a specific Group Id Number? (y/n): " answer_gid
                                 if [ -z "$answer_gid" ]; then
                                         echo "No input detected. Try again!"
                                 elif [ $answer_gid = "y" ]; then
-                                        g
+                                        while true;
+                                        do
+                                                read -p "Enter a number which is higher than 1000: " a_gid_number
+                                                if [ -z "$a_gid_number" ]; then
+                                                        echo "No input detected. Try again!"
+                                                else
+                                                        clear
+                                                        echo -e "creating group: ${HIGreen}$group_name ${Color_Off}..."
+                                                        sleep 1
+                                                        sudo groupadd -f -g $a_gid_number $group_name
+                                                        while true;
+                                                        do
+                                                                clear
+                                                                echo -e "The Group ${HIGreen}$group_name${Color_Off} has been created!"
+                                                                read -p "Do you want to create another group or return? (again/return): " redoansw_group
+                                                                if [ -z $redoansw_group ]; then
+                                                                        echo "No input detected. Try again!"
+                                                                elif [ $redoansw_group = "again" ]; then
+                                                                        create_group
+                                                                elif [ $redoansw_group = "return" ]; then
+                                                                        benutzer_und_gruppenverw
+                                                                else
+                                                                        echo "Incorrect answer. Try again!"
+                                                                fi
+                                                        done
+                                                fi
+                                        done
                                 elif [ $answer_gid = "n" ]; then
-                                        g
+                                        clear
+                                        echo -e "creating group: ${HIGreen}$group_name ${Color_Off}..."
+                                        sleep 1
+                                        sudo groupadd -f $group_name
+                                        while true;
+                                        do
+                                                clear
+                                                echo -e "The Group ${HIGreen}$group_name${Color_Off} has been created!"
+                                                read -p "Do you want to create another group or return? (again/return): " redoansw_group
+                                                if [ -z $redoansw_group ]; then
+                                                        echo "No input detected. Try again!"
+                                                elif [ $redoansw_group = "again" ]; then
+                                                        create_group
+                                                elif [ $redoansw_group = "return" ]; then
+                                                        benutzer_und_gruppenverw
+                                                else
+                                                        echo "Incorrect answer. Try again!"
+                                                fi
+                                        done
                                 fi
                         done
                 fi
