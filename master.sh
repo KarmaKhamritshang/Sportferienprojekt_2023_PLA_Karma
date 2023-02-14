@@ -123,11 +123,11 @@ ping_troubleshooting() {
                                 ;;
                         3)      
                                 clear
-                                echo "."
+                                echo "..."
                                 sleep 0.5
                                 echo ".."
                                 sleep 0.5
-                                echo "..."
+                                echo "."
                                 sleep 0.5
                                 echo "Exiting script... Goodbye! \( ^_^)／"
                                 sleep 1
@@ -145,25 +145,243 @@ ping_troubleshooting() {
 # 1) Create a new user
 
 create_user() {
-
+        # get power
+        power=$(sudo)
+        # Ask for Name
+        while true; 
+        do
+                clear
+                read -p "Enter username for the new user: " name_user
+                if [ -z "$name_user" ]; then
+                        echo "No input detected. Try again."
+                        sleep 1.5
+                else
+                        break
+                fi
+        done
+        # Ask for Full Name
+        while true;
+        do
+                clear
+                read -p "Enter the full name of the new user: " fullname_user
+                if [ -z "$fullname_user" ]; then
+                        echo "No input detected. Try again!"
+                        sleep 1.5
+                else
+                        # Ask user if they want to add new user to an existing group
+                        while true;
+                        do      
+                        clear
+                        read -p "Do you want to add the new user into a an existing group? (y/n): " adduser_group
+                        if [ $adduser_group = "n" ]; then
+                                while true;
+                                do
+                                        clear
+                                        read -p "Do you want a home directory for your new user? (y/n): " homedir
+                                        if [ -z "$homedir" ]; then
+                                                echo "No input detected. Try again!"
+                                                sleep 1.5
+                                        elif [ $homedir = "y" ]; then 
+                                                while true;
+                                                do
+                                                        clear
+                                                        echo "As a general guideline, passwords should consist of 6 to 8 characters"
+                                                        echo "including one or more characters from each of the following sets:"
+                                                        echo ""
+                                                        echo "- lower/upper case alphabetics"
+                                                        echo "- digits 0 thru 9"
+                                                        echo "- punctuation marks"
+                                                        echo ""
+                                                        while true;
+                                                        do
+                                                                read -s -p "Enter a password for the new user: " userpasswd
+                                                                if [ -z "$userpasswd" ]; then
+                                                                        echo "No input detected. Try again!"
+                                                                else
+                                                                        # User with name, with fullname, no group, with homedir
+                                                                        echo ""
+                                                                        sudo useradd -m $name_user -c "$fullname_user" -s /usr/bin/bash -p $userpasswd
+                                                                        echo -e "The user ${HIGreen}$name_user${Color_Off} has been created"
+                                                                        sleep 3
+                                                                        echo "Returning..."
+                                                                        sleep 1
+                                                                        benutzer_und_gruppenverw        
+                                                                fi
+                                                        done
+                                                done
+                                        elif [ $homedir = "n" ]; then
+                                                clear
+                                                echo "As a general guideline, passwords should consist of 6 to 8 characters"
+                                                echo "including one or more characters from each of the following sets:"
+                                                echo ""
+                                                echo "- lower/upper case alphabetics"
+                                                echo "- digits 0 thru 9"
+                                                echo "- punctuation marks"
+                                                echo ""
+                                                while true;
+                                                do
+                                                        read -s -p "Enter a password for the new user: " userpasswd
+                                                        if [ -z "$userpasswd" ]; then
+                                                                echo "No input detected. Try again!"
+                                                        else
+                                                                # User with name, with fullname, no group, no homedir
+                                                                echo ""
+                                                                sudo useradd $name_user -c "$fullname_user" -s /usr/bin/bash -p $userpasswd
+                                                                echo -e "The user ${HIGreen}$name_user${Color_Off} has been created"
+                                                                sleep 3
+                                                                echo "Returning..."
+                                                                sleep 1
+                                                                benutzer_und_gruppenverw        
+                                                        fi
+                                                done
+                                        fi
+                                done
+                        elif [ $adduser_group = "y" ]; then
+                                while true;
+                                do
+                                        clear
+                                        read -p "Enter existing group name: " group_name
+                                        if [ -z "$group_name" ]; then
+                                                echo "No input detected. Try again!"
+                                                sleep 1.5
+                                        else
+                                                while true;
+                                                do
+                                                        clear
+                                                        read -p "Do you want a home directory for your new user? (y/n): " homedir
+                                                        if [ -z "$homedir" ]; then
+                                                                echo "No input detected. Try again!"
+                                                                sleep 1.5
+                                                        elif [ $homedir = "y" ]; then
+                                                                while true;
+                                                                do
+                                                                        read -s -p "Enter a password for the new user: " userpasswd
+                                                                        if [ -z "$userpasswd" ]; then
+                                                                                echo "No input detected. Try again!"
+                                                                        else
+                                                                                # User with name, with fullname, with group, with homedir
+                                                                                echo ""
+                                                                                sudo useradd -m $name_user -c "$fullname_user" -G $group_name -s /usr/bin/bash -p $userpasswd
+                                                                                echo -e "The user ${HIGreen}$name_user${Color_Off} has been created"
+                                                                                sleep 3
+                                                                                echo "Returning..."
+                                                                                sleep 1
+                                                                                benutzer_und_gruppenverw        
+                                                                        fi
+                                                                done
+                                                        elif [ $homedir = "n" ]; then
+                                                                while true;
+                                                                do
+                                                                        read -s -p "Enter a password for the new user: " userpasswd
+                                                                        if [ -z "$userpasswd" ]; then
+                                                                                echo "No input detected. Try again!"
+                                                                        else
+                                                                                # User with name, with fullname, with group, no homedir
+                                                                                echo ""
+                                                                                sudo useradd $name_user -c "$fullname_user" -G $group_name -s /usr/bin/bash -p $userpasswd
+                                                                                echo -e "The user ${HIGreen}$name_user${Color_Off} has been created"
+                                                                                sleep 3
+                                                                                echo "Returning..."
+                                                                                sleep 1
+                                                                                benutzer_und_gruppenverw        
+                                                                        fi
+                                                                done
+                                                        fi
+                                                done
+                                        fi
+                                done
+                        else
+                                echo "Incorrect answer. Try again!"
+                                sleep 1
+                        fi
+                        done                
+                fi
+        done
 }
 
 # 3) Delete a user
 
 del_user() {
-
+        while true;
+        do
+                clear
+                read -p "Enter the user you want to delete: " delete_user
+                if [ -z "$delete_user" ]; then
+                        echo "No input detected. Try again!"
+                else
+                        echo "Deleting User..."
+                        sleep 1
+                        sudo userdel $delete_user
+                        echo "DONE!"
+                        sleep 3
+                        echo "Returning..."
+                        sleep 1.5
+                        break
+                fi
+        done
 }
  
 # 4) Create a new group
 
 create_group() {
-
+        echo "Hello"
 }
 
 # 5) Delete a group
 
 del_group() {
+        echo "Hello"
+}
 
+# 6) List groups of a specific user
+
+usergroup_listing() {
+        while true;
+        do
+                clear
+                read -p "Enter a user to list the groups that they're inside of: " usrgrlist
+                if [ -z "$usrgrlist" ]; then
+                        echo "No input detected. Try again!"
+                        sleep 1.5
+                else
+                        sleep 1
+                        echo "Listing groups..."
+                        sleep 0.5
+                        groups $usrgrlist
+                        read -p "Do you wanna list again or return? (again/return) :" answusrgrlist
+                        if [ -z "$answusrgrlist" ]; then
+                                echo "No input detected. Try again!"
+                        elif [ $answusrgrlist = "again" ]; then
+                                usergroup_listing
+                        elif [ $answusrgrlist = "return" ]; then
+                                echo "Returning..."
+                                sleep 1
+                                benutzer_und_gruppenverw
+                        fi
+                fi
+        done
+}
+
+# 7) Listing existing groups
+
+groups_listing() {
+        while true;
+        do
+                clear
+                cut -d: -f1 /etc/group
+                echo "---------------------------------------------------------------------------"
+                read -p "Do you wanna list the groups again or return? (again/return): " gl_answer
+                if [ $gl_answer = "again" ]; then
+                        groups_listing
+                elif [ $gl_answer = "return" ]; then
+                        echo "Returning..."
+                        sleep 1
+                        benutzer_und_gruppenverw
+                else
+                        echo "Incorrect answer. Try again!"
+                        sleep 1.5
+                fi
+        done
 }
 
 
@@ -180,9 +398,10 @@ benutzer_und_gruppenverw() {
                 echo -e " [3] Delete a user "
                 echo -e " [4] Create a new group "
                 echo -e " [5] Delete a group "
-                echo -e " [6] List existing groups "
-                echo -e " [7] Return to main menu "
-                echo -e " [8] Exit ${Color_Off}"
+                echo -e " [6] List groups of a specific user"
+                echo -e " [7] List existing groups of current process"
+                echo -e " [8] Return to main menu "
+                echo -e " [9] Exit ${Color_Off}"
                 echo ""
                 read -p "Choose an option: " pingopt
                 case $pingopt in
@@ -215,30 +434,21 @@ benutzer_und_gruppenverw() {
                                 del_group
                                 ;;
                         6)
-                                clear
-                                echo "Those are the currently logged in users:"
-                                sleep 1
-                                echo "..."
-                                sleep 0.5
-                                echo ".."
-                                sleep 0.5
-                                echo "."
-                                sleep 0.5
-                                users
-                                sleep 3.5
-                                echo "Returning..."
-                                sleep 1
+                                usergroup_listing
                                 ;;
                         7)
-                                main
+                                groups_listing
                                 ;;
                         8)
+                                main
+                                ;;
+                        9)
                                 clear
-                                echo "."
+                                echo "..."
                                 sleep 0.5
                                 echo ".."
                                 sleep 0.5
-                                echo "..."
+                                echo "."
                                 sleep 0.5
                                 echo "Exiting script... Goodbye! \( ^_^)／"
                                 sleep 1
@@ -284,7 +494,6 @@ echo -e "    ██║  ██║╚██████╔╝   ██║   ╚�
 echo -e "The ╚═╝  ╚═╝ ╚═════╝    ╚═╝    ╚═════╝  Script ${Color_Off}"
                 echo ""
                 echo "[+]═════[ Author : Karma Khamritshang ]═════[+]"
-                echo ""
                 echo -e "┌══════════════════════════════════════┐"
                 echo -e "█    Your Network Configuration        █" 
                 echo -e "└══════════════════════════════════════┘" 
@@ -301,7 +510,8 @@ echo -e "The ╚═╝  ╚═╝ ╚═════╝    ╚═╝    ╚═�
                 echo -e " [3] User and Group Management "
                 echo -e " [4] Password Manager "
                 echo -e " [5] File Manager "
-                echo -e " [6] Exit ${Color_Off}"
+                echo -e " [6] Exit "
+                echo -e " [7] Restart${Color_Off} "
                 echo ""
                 read -p "Choose an option: " menu
 
@@ -331,17 +541,34 @@ echo -e "The ╚═╝  ╚═╝ ╚═════╝    ╚═╝    ╚═�
                                 ;;
                         6)      
                                 clear
-                                echo "."
+                                echo "..."
                                 sleep 0.5
                                 echo ".."
                                 sleep 0.5
-                                echo "..."
+                                echo "."
                                 sleep 0.5
                                 echo "Exiting script... Goodbye! \( ^_^)／"
                                 sleep 1
                                 exit # Skript beenden
                                 ;;
+                        7)      
+                                sudo reboot
+                                ;;
+
                         99) # Schneller Shutdown
+                                clear
+                                echo -e "${BIRed}Self destruction in.."
+                                sleep 1
+                                echo -e "5.."
+                                sleep 1
+                                echo -e "4.."
+                                sleep 1
+                                echo -e "3.."
+                                sleep 1
+                                echo -e "2.."
+                                sleep 1
+                                echo -e "1..${Color_Off}"
+                                sleep 1
                                 sudo shutdown now # Funktioniert ohne Eingabe des Passwords, wenn der Admin kein Passwort definiert hat.
                                 ;;
                         *)
