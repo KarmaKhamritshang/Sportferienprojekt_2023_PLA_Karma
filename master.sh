@@ -45,6 +45,43 @@ BG_IWhite='\033[0;107m'   # White
 
 #--------------------------------------------------------------------------------------------
 
+# Package Installation
+
+# Define the packages to check for
+pkg1="net-tools"
+pkg2="mailutils"
+
+# Check if package 1 is installed
+clear
+echo -e "Checking if ${HIGreen}$pkg1${Color_Off} package is installed..."
+sleep 1
+if [ ! dpkg -s "$pkg1" >/dev/null 2>&1 ]; then
+        echo -e "${HIRed}$pkg1${Color_Off} package is not installed. Installing..."
+        sudo apt-get update
+        sudo apt-get install "$pkg1"
+else
+        echo -e "${HIGreen}$pkg1${Color_Off} package is already installed."
+        sleep 2.5
+fi
+
+clear
+echo "..."
+sleep 1.5
+
+# Check if package 2 is installed
+echo -e "Checking if ${HIGreen}$pkg2${Color_Off} package is installed..."
+sleep 1
+if [ ! dpkg -s "$pkg2" >/dev/null 2>&1 ]; then
+        echo -e "${HIRed}$pkg2${ColorOff} package is not installed. Installing..."
+        sudo apt-get update
+        sudo apt-get install "$pkg2"
+else
+        echo -e "${HIGreen}$pkg2${Color_Off} package is already installed."
+        sleep 2.5
+fi
+
+#--------------------------------------------------------------------------------------------
+
 pingpong() {
         clear
         read -p "Enter a valid IP Address or DNS: " address
@@ -687,4 +724,5 @@ echo -e "The ╚═╝  ╚═╝ ╚═════╝    ╚═╝    ╚═�
                 esac
         done
 }
-main # Menü wird als erstes abgerufen
+
+main # starting point after package installation
