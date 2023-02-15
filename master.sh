@@ -47,45 +47,56 @@ BG_IWhite='\033[0;107m'   # White
 
 # Package Installation
 
-# Define the packages to check for
-pkg1="net-tools"
-pkg2="mailutils"
+# Define packages to check and install
+packages=("net-tools" "mailutils")
 
-# Check if package 1 is installed
-clear
-echo -e "Checking if ${HIGreen}$pkg1${Color_Off} package is installed..."
-sleep 1
-if [ ! dpkg -s "$pkg1" >/dev/null 2>&1 ]; then
-        echo -e "${HIRed}$pkg1${Color_Off} package is not installed. Installing..."
-        sudo apt-get update
-        sudo apt-get install "$pkg1"
-else
-        echo -e "${HIGreen}$pkg1${Color_Off} package is already installed."
-        sleep 2.5
-fi
-
-clear
-echo "..."
-sleep 1.5
-
-# Check if package 2 is installed
-echo -e "Checking if ${HIGreen}$pkg2${Color_Off} package is installed..."
-sleep 1
-if [ ! dpkg -s "$pkg2" >/dev/null 2>&1 ]; then
-        echo -e "${HIRed}$pkg2${ColorOff} package is not installed. Installing..."
-        sudo apt-get update
-        sudo apt-get install "$pkg2"
-else
-        echo -e "${HIGreen}$pkg2${Color_Off} package is already installed."
-        sleep 2.5
-fi
+# Check and install packages
+for package in "${packages[@]}"
+do
+        clear
+        echo -e "Checking if ${HIGreen}$package${Color_Off} package is installed..."
+        sleep 0.5
+        echo "."
+        sleep 0.5
+        echo ".."
+        sleep 0.5
+        echo "..."
+        # Check if package is installed
+        if [ dpkg -s "$package" &> /dev/null ]; then
+                echo -e "${HIGreen}$package${Color_Off} is already installed."
+                sleep 1.5
+        else
+                # Install package if it's not installed
+                echo -e "Installing ${HIGreen}$package${Color_Off}..."
+                sudo apt-get -qq install "$package"
+                echo -e "${HIGreen}$package${Color_Off} has been installed successfully."
+                sleep 1.5
+        fi
+done
 
 #--------------------------------------------------------------------------------------------
 
 pingpong() {
-        clear
-        read -p "Enter a valid IP Address or DNS: " address
-        read -p "Enter amount of packets: " packets
+        while true;
+        do
+                clea
+                read -p "Enter a valid IP Address or DNS: " address
+                if [ -z $address ]; then
+                        echo "No input detected. Try again!"
+                        sleep 2
+                else 
+                        break
+                fi
+        done
+        while true;
+        do
+                read -p "Enter amount of packets: " packets
+                if [ -z $packets ]; then
+                        echo "No input detected. Try again!"
+                else
+                        break
+                fi
+        done
         echo ""
         ping -c $packets $address 
         # Ping the specified host and store the result
@@ -107,7 +118,7 @@ pingpong() {
                         if [ $failping -eq 1 ]; then
                                 # If the ping was not successful, gather information about the network
                                 # connection and create a report
-                                report="Ping to $address failed. \n\n Here are some solutions: \n\n 1) Check the connectivity: Ensure that the target device is turned on and connected to the network. \n\n 2) Verify the IP address:  Make sure that you have entered the correct IP address or hostname of the target device. \n\n 3) Check the firewall: If a firewall is enabled on the target device, it might be blocking the incoming    ping request. Disable the firewall temporarily to see if it resolves the issue. \n\n 4) Disable antivirus software: Antivirus software can sometimes interfere with network connectivity. Try      disabling it temporarily to see if it resolves the issue. \n\n 5) Restart the network devices: Restart the target device and the device that you are pinging from to ensure that they are functioning        properly. \n\n 6) Flush the DNS cache: Clearing the DNS cache can sometimes resolve issues with network connectivity. \n\n 7) Update network drivers: Make sure that you have the latest network       drivers installed on your device to ensure optimal network performance. \n\n 8) Check the network cable: If you are using a wired connection, check the network cable for any signs of damage or wear.        \n\n 9) Try a different network: If you are using a wireless connection, try moving closer to the router or switch to see if the signal strength improves. If you are using a wired connection, try a  different cable or port on the switch. \n\n 10) Check the network settings: Ensure that the network settings on your device are configured correctly, including the IP address, subnet mask, and         default gateway.\n\n 11) Contact the network administrator: If you are still unable to ping the target device, reach out to your network administrator for further      assistance"                                
+                                report="Ping to $address failed. \n\n Here are some solutions: \n\n 1) Check the connectivity: Ensure that the target device is turned on and connected to the network. \n\n 2) Verify the IP address: Make sure that you have entered the correct IP address or hostname of the target device. \n\n 3) Check the firewall: If a firewall is enabled on the target device, it might be blocking the incoming ping request. Disable the firewall temporarily to see if it resolves the issue. \n\n 4) Disable antivirus software: Antivirus software can sometimes interfere with network connectivity. Try disabling it temporarily to see if it resolves the issue. \n\n 5) Restart the network devices: Restart the target device and the device that you are pinging from to ensure that they are functioning properly. \n\n 6) Flush the DNS cache: Clearing the DNS cache can sometimes resolve issues with network connectivity. \n\n 7) Update network drivers: Make sure that you have the latest network drivers installed on your device to ensure optimal network performance. \n\n 8) Check the network cable: If you are using a wired connection, check the network cable for any signs of damage or wear. \n\n 9) Try a different network: If you are using a wireless connection, try moving closer to the router or switch to see if the signal strength improves. If you are using a wired connection, try a different cable or port on the switch. \n\n 10) Check the network settings: Ensure that the network settings on your device are configured correctly, including the IP address, subnet mask, and default gateway. \n\n 11) Contact the network administrator: If you are still unable to ping the target device, reach out to your network administrator for further assistance"                                
                                 # Prompt the user for the email address to send the report to
                                 read -p "Enter your email address to send the report to: " email
                                 # Send the report to the specified email address
