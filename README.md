@@ -2,7 +2,7 @@
 
 ### Project Name: Toolkit für Sysadmins
 
-### Tools & Informationsquellen:
+### Tools & Information sources:
 
 An A-Z Index of the Linux command line
 https://ss64.com/bash/
