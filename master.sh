@@ -45,37 +45,6 @@ BG_IWhite='\033[0;107m'   # White
 
 #--------------------------------------------------------------------------------------------
 
-# Package Installation
-
-# Define packages to check and install
-packages=("net-tools" "mailutils")
-
-# Check and install packages
-for package in "${packages[@]}"
-do
-        clear
-        echo -e "Checking if ${HIGreen}$package${Color_Off} package is installed..."
-        sleep 0.5
-        echo "."
-        sleep 0.5
-        echo ".."
-        sleep 0.5
-        echo "..."
-        # Check if package is installed
-        if [ dpkg -s "$package" &> /dev/null ]; then
-                echo -e "${HIGreen}$package${Color_Off} is already installed."
-                sleep 1.5
-        else
-                # Install package if it's not installed
-                echo -e "Installing ${HIGreen}$package${Color_Off}..."
-                sudo apt-get -qq install "$package"
-                echo -e "${HIGreen}$package${Color_Off} has been installed successfully."
-                sleep 1.5
-        fi
-done
-
-#--------------------------------------------------------------------------------------------
-
 pingpong() {
         while true;
         do
@@ -716,11 +685,7 @@ echo -e "The ╚═╝  ╚═╝ ╚═════╝    ╚═╝    ╚═�
 
                         99) # Schneller Shutdown
                                 clear
-                                echo -e "${BIRed}Self destruction in.."
-                                sleep 1
-                                echo -e "5.."
-                                sleep 1
-                                echo -e "4.."
+                                echo -e "${BIRed}Shutting down.."
                                 sleep 1
                                 echo -e "3.."
                                 sleep 1
@@ -728,6 +693,7 @@ echo -e "The ╚═╝  ╚═╝ ╚═════╝    ╚═╝    ╚═�
                                 sleep 1
                                 echo -e "1..${Color_Off}"
                                 sleep 1
+                                echo -e "Goodbye! \( ^_^)／"
                                 sudo shutdown now # Funktioniert ohne Eingabe des Passwords, wenn der Admin kein Passwort definiert hat.
                                 ;;
                         *)
