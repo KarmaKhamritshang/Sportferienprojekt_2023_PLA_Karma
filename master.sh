@@ -330,7 +330,7 @@ del_user() {
                 else
                         echo -e "Deleting the User ${HIRed}$delete_user${Color_Off}..."
                         sleep 3
-                        sudo userdel $delete_user
+                        sudo userdel -r $delete_user
                         echo "DONE!"
                         sleep 2
                         while true;
@@ -697,4 +697,4 @@ echo -e "The ╚═╝  ╚═╝ ╚═════╝    ╚═╝    ╚═�
         done
 }
 
-main
+main 
