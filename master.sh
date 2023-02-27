@@ -496,7 +496,7 @@ groups_listing() {
         while true;
         do
                 clear
-                cut -d: -f1 /etc/group
+                cat /etc/group
                 echo "---------------------------------------------------------------------------"
                 read -p "Do you wanna list the groups again or return? (again/return): " gl_answer
                 if [ $gl_answer = "again" ]; then
