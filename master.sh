@@ -589,14 +589,7 @@ benutzer_und_gruppenverw() {
                 esac    
         done
 }
-#--------------------------------------------------------------------------------------------
-password_generator() {
-        echo "Hello"
-}
-#--------------------------------------------------------------------------------------------
-file_manager(){
-        echo "Hello"
-}
+
 #--------------------------------------------------------------------------------------------
 # Auswahlmenü
 #--------------------------------------------------------------------------------------------
@@ -633,13 +626,12 @@ echo -e "The ╚═╝  ╚═╝ ╚═════╝    ╚═╝    ╚═�
                 echo "█ Gateway      | $gateway          █"
                 echo "└══════════════════════════════════════┘"
                 echo ""
-                echo -e "${BIRed} [1] Ping Troubleshooting "
+                echo -e "${BIRed} [1] Ping Troubleshooting"
                 echo -e " [2] DNS Flush"
-                echo -e " [3] User and Group Management "
-                echo -e " [4] Password Manager "
-                echo -e " [5] File Manager "
-                echo -e " [6] Exit "
-                echo -e " [7] Restart${Color_Off} "
+                echo -e " [3] User and Group Management"
+                echo -e " [4] Exit"
+                echo -e " [5] Reboot"
+                echo -e " [6] Shutdown${Color_Off}"
                 echo ""
                 read -p "Choose an option: " menu
 
@@ -661,14 +653,6 @@ echo -e "The ╚═╝  ╚═╝ ╚═════╝    ╚═╝    ╚═�
                                 ;;
                         4)      
                                 clear
-                                password_generator
-                                ;;
-                        5)      
-                                clear
-                                file_manager
-                                ;;
-                        6)      
-                                clear
                                 echo "..."
                                 sleep 0.5
                                 echo ".."
@@ -677,21 +661,30 @@ echo -e "The ╚═╝  ╚═╝ ╚═════╝    ╚═╝    ╚═�
                                 sleep 0.5
                                 echo "Exiting script... Goodbye! \( ^_^)／"
                                 sleep 1
-                                exit # Skript beenden
+                                exit
                                 ;;
-                        7)      
+                        5)      
+                                clear
+                                echo -e "${BIRed}Rebooting.."
+                                sleep 0.5
+                                echo -e "..."
+                                sleep 0.5
+                                echo -e ".."
+                                sleep 0.5
+                                echo -e ".${Color_Off}"
+                                sleep 1
+                                echo -e "Goodbye! \( ^_^)／"
                                 sudo reboot
                                 ;;
-
-                        99) # Schneller Shutdown
+                        6)
                                 clear
                                 echo -e "${BIRed}Shutting down.."
-                                sleep 1
-                                echo -e "3.."
-                                sleep 1
-                                echo -e "2.."
-                                sleep 1
-                                echo -e "1..${Color_Off}"
+                                sleep 0.5
+                                echo -e "..."
+                                sleep 0.5
+                                echo -e ".."
+                                sleep 0.5
+                                echo -e ".${Color_Off}"
                                 sleep 1
                                 echo -e "Goodbye! \( ^_^)／"
                                 sudo shutdown now # Funktioniert ohne Eingabe des Passwords, wenn der Admin kein Passwort definiert hat.
@@ -704,4 +697,4 @@ echo -e "The ╚═╝  ╚═╝ ╚═════╝    ╚═╝    ╚═�
         done
 }
 
-main # starting point after package installation
+main
