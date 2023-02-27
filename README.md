@@ -23,4 +23,4 @@ https://www.baeldung.com/linux/bash-hide-user-input
 
 - sudo apt install mailutils
 
--	sudo apt-get install net-tools
+-	sudo apt install net-tools
