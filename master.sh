@@ -687,7 +687,7 @@ echo -e "The ╚═╝  ╚═╝ ╚═════╝    ╚═╝    ╚═�
                                 echo -e ".${Color_Off}"
                                 sleep 1
                                 echo -e "Goodbye! \( ^_^)／"
-                                sudo shutdown now # Funktioniert ohne Eingabe des Passwords, wenn der Admin kein Passwort definiert hat.
+                                sudo shutdown now 
                                 ;;
                         *)
                                 echo "This option doesn't exist, try again..."
