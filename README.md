@@ -22,3 +22,5 @@ https://www.baeldung.com/linux/bash-hide-user-input
 ### Packages that need to be installed
 
 - sudo apt install mailutils
+
+-	sudo apt-get install <net-tools>
