@@ -1,5 +1,3 @@
-# Sportferienprojekt 2023 - Karma Khamritshang
-
 ### Project Name: Toolkit für Sysadmins
 
 ### Tools & Information sources:
