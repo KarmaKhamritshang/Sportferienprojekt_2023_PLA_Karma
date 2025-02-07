@@ -1,5 +1,3 @@
-### Project Name: Toolkit für Sysadmins
-
 ### Tools & Information sources:
 
 An A-Z Index of the Linux command line
@@ -8,7 +6,7 @@ https://ss64.com/bash/
 Bash Scripting Cheatsheet
 https://devhints.io/bash
 
-Mail-Command Erklärung:
+Mail-Command:
 https://linuxhint.com/umail-command-linux/
 
 Banner Tool:
